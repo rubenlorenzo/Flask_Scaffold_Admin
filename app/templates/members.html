@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+    {% block content %}
+        <h2>Members page</h2>
+        <p>This page can only be accessed by authenticated users.</p><br/>
+        <div class="list-group" id="list_items">
+           {% for u in users %}
+             {% if u.username == current_user.username %}
+                <a href="" class="list-group-item active">
+              {% else %}
+                <a href="" class="list-group-item">
+              {% endif %}
+              <h4><span class="glyphicon glyphicon-user"> {{u.username}}</span></h4>
+              <span class="glyphicon glyphicon-eye-open">
+              {% for r in u.roles %}
+              {{r.name }}
+              {% endfor %}
+              </span>
+              </a>
+            {% endfor %}
+          </div>
+{% endblock %}
