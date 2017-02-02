@@ -5,9 +5,9 @@
         <div class="list-group" id="list_items">
            {% for u in users %}
              {% if u.username == current_user.username %}
-                <a href="" class="list-group-item active">
+                <a href="/members/profile/{{u.username}}" class="list-group-item active">
               {% else %}
-                <a href="" class="list-group-item">
+                <a href="/members/profile/{{u.username}}" class="list-group-item">
               {% endif %}
               <h4><span class="glyphicon glyphicon-user"> {{u.username}}</span></h4>
               <span class="glyphicon glyphicon-eye-open">

@@ -1,7 +1,20 @@
+body {
+    font-family: "Roboto Slab", sans-serif;
+    background-color: #F7F7F7;
+}
+
+h1, h2, h3, h4, h5, h6, nav {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+}
+
+
+
 #main-div{
   margin-left: 5em;
   margin-right: 5em;
 }
+
 a{
   color:#01A158;
 }
@@ -14,44 +27,59 @@ a :hover, a :focus, a :active, a .active {
   border-color: #01A158;
 }
 
+.btn{
+  border-radius: 0px;
+}
+
 .btn-primary {
   background-color: #01A158;
-  border-radius: 0px;
   border-color: #01A158;
 
 }
 
 .btn-primary:hover{
   background-color: #ffffff;
-  border-radius: 0px;
-  border-color: #01A158;
   color:#797882;
 }
 
-.list-group-item{
-  border-radius: 0px;
+.list-group-item:first-child, .list-group-item:last-child{
+    border-radius: 0px;
 }
+
 
 .list-group-item.active {
   background-color: #01A158;
-  border-radius: 0px;
+
   border-color: #01A158;
   z-index: 2;
 }
 a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus, .list-group-item.active:hover  {
-  background-color: #F7F7F7;
-  border-radius: 0px;
+  background-color: #faece1;
   border-color: #01A158;
   color:#d41111;
   z-index: 2;
 }
 
 
+
+#icon-web{
+  width: 32px;
+  margin-top: 0.5em;
+}
+
+#avatar{
+  font-size: 88px;
+  margin-top: 0.4em;
+  margin-left: 0.1em;
+}
+.thumbnail{
+  border-radius: 0px;
+}
+
 /*NAVBAR */
 .navbar {
-
     width: 100%;
-    border-radius: 0px 0px 4px 4px;
+    border-radius: 0px;
     font-size:  1.3em;
 }
 

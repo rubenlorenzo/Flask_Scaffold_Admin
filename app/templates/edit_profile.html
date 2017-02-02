@@ -1,0 +1,23 @@
+{% extends "profile.html"  %}
+{% set user = current_user %}
+
+{% block title %}
+  <h2>My Profile page</h2>
+{% endblock %}
+
+{% block profile_edit %}
+
+  {% from "flask_user/_macros.html" import render_field, render_checkbox_field, render_submit_field %}
+
+  {% if user_manager.enable_change_username %}
+  <p><a href="{{ url_for('user.change_username') }}">{%trans%}Change username{%endtrans%}</a></p>
+  {% endif %}
+  {% if user_manager.enable_change_password %}
+  <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change password{%endtrans%}</a></p>
+  {% endif %}
+
+{% endblock %}
+
+{% block buttons %}
+  <a href="/members" class="btn btn-default" role="button">Members</a>
+{% endblock %}
