@@ -12,28 +12,32 @@
         		</button>
 
         </div>
-
-
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <!-- Navbar - right -->
             <ul class="nav navbar-nav">
+                <!-- Logo - web -->
                 <li>
-                    <img id="icon-web" src="/static/icon-users.png" alt=" Logo - web" />
+                    <img id="icon-web" src="/static/icon-users.png" alt="Logo - web" />
                 </li>
+                <!-- Title - web -->
                 <li>
                   <a href="/">USERS APP</a>
                 </li>
-                </li>
             </ul>
 
+            <!-- Navbar - right -->
             <ul class="nav navbar-nav navbar-right">
               {% if call_or_get(current_user.is_authenticated) %}
+                  <!-- User - login -->
                   <li><a href="/members/myprofile/edit">{{ current_user.username }}</a></li>
                   <li><a href="{{ url_for('user.logout') }}">Sign out</a></li>
               {% else %}
                   <li><a href="{{ url_for('user.login') }}">Sign in</a></li>
               {% endif %}
             </ul>
+
         </div>
         <!-- /.navbar-collapse -->
 

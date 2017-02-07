@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <!-- Title -->
     {% block title %}
       <h2>Profile page</h2>
     {% endblock %}
     <div class="row">
       <div class="col-sm-10 col-md-5">
+
+        <!-- Thumbnail -->
         <div class="thumbnail">
+
+          <! -- Avatar -->
           <span id="avatar" class="glyphicon glyphicon-user"></span>
           <div class="caption">
 
@@ -14,8 +19,10 @@
             <h3>{{user.username}}</h3>
             <p><b>email:</b> {{user.email}}</p>
 
-            <!-- First_name & last_name -->
+            <!-- Block edit -->
             {% block profile_edit %}
+
+              <!-- First_name & last_name -->
               <p>
                 {% if user.first_name==" " and user.last_name==" " %}
                   <b>name:</b> <i>no entry</i></p>
@@ -23,6 +30,7 @@
                   <b>name:</b> {{user.first_name}} {{user.last_name}}
                 {% endif %}
               </p>
+
             {% endblock %}
 
             <!-- Roles -->
@@ -42,8 +50,10 @@
                <a href="/members" class="btn btn-default" role="button">Members</a>
              </p>
             {% endblock %}
+
           </div>
         </div>
+
       </div>
     </div>
 {% endblock %}

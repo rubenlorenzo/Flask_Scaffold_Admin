@@ -1,3 +1,4 @@
+/* Gloval style */
 body {
     font-family: "Roboto Slab", sans-serif;
     background-color: #F7F7F7;
@@ -8,13 +9,6 @@ h1, h2, h3, h4, h5, h6, nav {
     font-weight: 700;
 }
 
-
-
-#main-div{
-  margin-left: 5em;
-  margin-right: 5em;
-}
-
 a{
   color:#01A158;
 }
@@ -23,10 +17,12 @@ a :hover, a :focus, a :active, a .active {
     color: #d41111;
 }
 
+/* Forms */
 .form-control:focus{
   border-color: #01A158;
 }
 
+/* Buttons */
 .btn{
   border-radius: 0px;
 }
@@ -42,17 +38,17 @@ a :hover, a :focus, a :active, a .active {
   color:#797882;
 }
 
+/* List -group  */
 .list-group-item:first-child, .list-group-item:last-child{
     border-radius: 0px;
 }
 
-
 .list-group-item.active {
   background-color: #01A158;
-
   border-color: #01A158;
   z-index: 2;
 }
+
 a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus, .list-group-item.active:hover  {
   background-color: #faece1;
   border-color: #01A158;
@@ -60,23 +56,33 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
   z-index: 2;
 }
 
-
-
-#icon-web{
-  width: 32px;
-  margin-top: 0.5em;
+/* Base */
+#main-div{
+  margin-left: 5em;
+  margin-right: 5em;
 }
 
+/* Profile */
+.thumbnail{
+  border-radius: 0px;
+}
 #avatar{
   font-size: 88px;
   margin-top: 0.4em;
   margin-left: 0.1em;
 }
-.thumbnail{
-  border-radius: 0px;
+
+/* Edit profile */
+#links_Username_Pass{
+  margin-top: 10px;
 }
 
-/*NAVBAR */
+/* Navbar */
+#icon-web{
+  width: 32px;
+  margin-top: 0.5em;
+}
+
 .navbar {
     width: 100%;
     border-radius: 0px;

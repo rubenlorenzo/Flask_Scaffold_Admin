@@ -1,5 +1,3 @@
-
-
 from flask import Flask
 import os
 from flask_mail import Mail

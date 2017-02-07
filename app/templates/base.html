@@ -12,8 +12,6 @@
  <!-- jQuery library -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-
-
  <!-- Latest compiled JavaScript -->
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -23,16 +21,17 @@
 <!-- Style from page -->
 <link rel="stylesheet"  type="text/css" href="/static/style.css">
 
-
-
 </head>
 <body>
+
   <div class="container-fluid">
      {% block body %}
-
-       {% include 'navbar.html' %}
+      <!-- NavBar -->
+      {% include 'navbar.html' %}
 
       <div id="main-div" class="with-margins">
+
+      <!-- Messages -->
       {# One-time system messages called Flash messages #}
       {% block flash_messages %}
          {%- with messages = get_flashed_messages(with_categories=true) -%}
@@ -47,12 +46,13 @@
          {%- endwith %}
       {% endblock %}
 
+      <!-- Content -->
       {% block main %}{% block content %}{% endblock %}{% endblock %}
 
       </div>
 
-
     {% endblock %}
   </div>
+
 </body>
 </html>
