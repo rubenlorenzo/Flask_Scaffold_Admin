@@ -15,7 +15,7 @@
 
 {% macro render_checkbox_field(field, label=None) -%}
     {% if not label %}{% set label=field.label.text %}{% endif %}
-    <div class="checkbox">
+    <div class="checkbox checkbox-inline">
         <label>
             {{ field(type='checkbox', **kwargs) }} {{ label }}
         </label>
@@ -24,9 +24,9 @@
 
 {% macro render_radio_field(field) -%}
     {% for value, label, checked in field.iter_choices() %}
-        <div class="radio radio-inline">
+        <div class="radio">
             <label>
-                <input type="radio" name="{{ field.id }}" id="{{ field.id }}" value="{{ value }}"{% if checked %} checked{% endif %}>
+                <input type="radio" name="{{ field.id }}" id="{{ field.id }}" value="{{ value }}"{% if check %} checked{% endif %}>
                 {{ label }}
             </label>
         </div>

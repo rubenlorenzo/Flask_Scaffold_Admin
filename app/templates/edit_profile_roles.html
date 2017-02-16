@@ -1,0 +1,56 @@
+{% extends "profile.html"  %}
+<!-- Macros Form -->
+{% from "macros/form_macros.html" import render_field, render_checkbox_field, render_submit_field %}
+
+<!-- Roles -->
+{% block roles %}
+  <p>
+
+        <b>Roles</b>
+
+        <form action="/members/roles/add?user={{user.username}}" method="POST" class="form_role" role="form">
+          <div class="row">
+            <div class="col-sm-6 col-md-5 col-lg-4">
+              {{ form_user.hidden_tag() }}
+              {{ render_field(form_role.name, label_visible=false, placeholder="Add role") }}
+
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-1">
+              {{ render_submit_field(form_role.submit) }}<!--<a><span class="glyphicon glyphicon-plus"></span></a><br />-->
+            </div>
+          </div>
+        </form>
+
+        <form action="/members/roles/add/{{user.username}}" method="POST" class="form_role_user" role="form">
+          <div class="row">
+            <div class="col-sm-6 col-md-5 col-lg-4">
+              {{ form_user.hidden_tag() }}
+              {% for r in roles %}
+                {% set vars = {'user_role_checked' : false} %}
+
+                {% for user_r in user.roles %}
+                  {% if user_r.name==r.name %}
+                    {% if vars.update({'user_role_checked' : true}) %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                {{ render_checkbox_field( form_role.name, label=r.name, value=r.name, checked=vars.user_role_checked) }}
+              {% endfor %}
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 col-md-5 col-lg-4">
+              {{ render_submit_field(form_user.submit) }}
+            </div>
+          </div>
+        </form>
+
+  </p>
+{% endblock %}
+
+
+<!-- Buttons -->
+{% block buttons %}
+  <a href="/members" class="btn btn-default" role="button">Members</a>
+{% endblock %}

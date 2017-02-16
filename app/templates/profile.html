@@ -34,19 +34,31 @@
             {% endblock %}
 
             <!-- Roles -->
-            <p>
-              <b>Roles:</b>
-              {% for r in user.roles %}
-                {{r.name}}
-              {% endfor %}
-            </p>
+            {% block roles %}
+              <p>
+                <b>Roles:</b>
+                {% for r in user.roles %}
+                  {{r.name}}
+                {% endfor %}
+              </p>
+            {% endblock %}
 
             <!-- Buttons -->
             {% block buttons %}
             <p>
               {% if current_user.username == user.username %}
-              <a href="/members/myprofile/edit" class="btn btn-primary" role="button">Edit</a>
+                <a href="/members/myprofile/edit" class="btn btn-primary" role="button">Edit</a>
+
+              {% else %}
+                {% for currentuser_r in current_user.roles %}
+                  {% if currentuser_r.name == "admin" %}
+                    <a href="/members/profile/roles/edit/{{user.username}}" class="btn btn-primary" role="button">Edit</a>
+                  {% endif %}
+                {% endfor %}
+
               {% endif %}
+
+
                <a href="/members" class="btn btn-default" role="button">Members</a>
              </p>
             {% endblock %}
