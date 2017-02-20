@@ -35,12 +35,12 @@ def profile(username):
 @login_required
 def edit_profile():
     # Initialize form
-    form = UserForm()
+    form_user = UserForm()
 
     # Process valid POST
-    if request.method == 'POST' and form.validate():
+    if request.method == 'POST' and form_user.validate():
         # Copy form fields to user_profile fields
-        form.populate_obj(current_user)
+        form_user.populate_obj(current_user)
 
         # Save user_profile
         db.session.commit()
@@ -50,8 +50,28 @@ def edit_profile():
 
     # Process GET or invalid POST
     return render_template('edit_profile.html',
-                           form=form, name=request.args.get('name'))
+                           form_user=form_user, name=request.args.get('name'))
 
+#Admin_profile_edit - route
+@app.route('/members/myprofile/edit/admin', methods=['GET', 'POST'])
+@roles_required('admin')
+def edit_profile_admin():
+    # Initialize form
+    form_user = UserForm()
+    form_role = RoleForm()
+
+    # Process valid POST
+    if request.method == 'POST' and form_user.validate():
+        # Copy form fields to user_profile fields
+        form_user.populate_obj(current_user)
+
+        # Save user_profile
+        db.session.commit()
+
+        # Redirect to home page
+        return redirect(url_for('edit_profile_admin'))
+
+    return render_template('edit_profile_admin.html', form_user=form_user, form_role=form_role, roles=db.session.query(Role).all(), name=request.args.get('name'))
 
 #Admin_page - route
 @app.route('/admin/page')
@@ -95,7 +115,7 @@ def add_role():
 
     return redirect(url_for('edit_profile_roles', username=request.args.get('user')))
 
-#Add_role - route
+#Add_role to user - route
 @app.route('/members/roles/add/<username>' ,methods=['GET','POST'])
 @roles_required('admin')
 def add_role_user(username) :
@@ -103,6 +123,7 @@ def add_role_user(username) :
     form_role = RoleForm()
 
     if request.method == 'POST' and form_role.validate() :
+        #Remove deselect roles
         remove_roles= [ ]
 
         for r_user in user.roles :
@@ -115,11 +136,12 @@ def add_role_user(username) :
             if not role_status :
                 remove_roles.append(r_user.name)
 
-        for r_role in remove_roles :        
+        for r_role in remove_roles :
             role=db.session.query(Role).filter(Role.name==r_role).first()
             user.roles.remove(role)
             db.session.commit()
 
+        #Add selected  roles
         for r_name in request.form.getlist("name") :
             role=db.session.query(Role).filter(Role.name==r_name).first()
 

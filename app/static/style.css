@@ -22,6 +22,10 @@ a :hover, a :focus, a :active, a .active {
   border-color: #01A158;
 }
 
+input[type="text"]{
+  border-radius: 0px;
+}
+
 /* Buttons */
 .btn{
   border-radius: 0px;
@@ -76,6 +80,19 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
 #links_Username_Pass{
   margin-top: 10px;
 }
+
+/* profile roles */
+#submit_role{
+  margin-left: -1.5em;
+
+}
+
+
+
+#submit_roles_user{
+  margin-top: 0.9px;
+}
+
 
 /* Navbar */
 #icon-web{

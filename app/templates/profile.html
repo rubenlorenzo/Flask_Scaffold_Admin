@@ -46,18 +46,33 @@
             <!-- Buttons -->
             {% block buttons %}
             <p>
-              {% if current_user.username == user.username %}
-                <a href="/members/myprofile/edit" class="btn btn-primary" role="button">Edit</a>
+              {% set vars = {'type_user' : ' '} %}
 
-              {% else %}
-                {% for currentuser_r in current_user.roles %}
-                  {% if currentuser_r.name == "admin" %}
-                    <a href="/members/profile/roles/edit/{{user.username}}" class="btn btn-primary" role="button">Edit</a>
-                  {% endif %}
-                {% endfor %}
+              {# According to roles and user select #}
+              {% for role_cu in current_user.roles %}
 
+                {# Role admin and current_user #}
+                {% if role_cu.name == "admin" and  current_user.username == user.username %}
+                  {% if vars.update({'type_user' : 'admin_currentuser'}) %}{% endif %}
+
+                {# Role admin  #}
+                {% elif role_cu.name == "admin" %}
+                  {% if vars.update({'type_user' : 'admin'}) %}{% endif %}
+
+                {# Only current_user #}
+                {% elif  current_user.username == user.username and vars.type_user != 'admin_currentuser' and vars.type_user != 'currentuser'  %}
+                    {% if vars.update({'type_user' : 'currentuser'}) %}{% endif %}
+                {% endif %}
+              {% endfor %}
+
+              {# According to the above choose a url #}
+              {% if vars.type_user == 'admin_currentuser' %}
+                <a href="/members/myprofile/edit/admin" class="btn btn-primary" role="button">Edit</a>
+              {% elif vars.type_user == 'admin' %}
+                <a href="/members/profile/roles/edit/{{user.username}}" class="btn btn-primary" role="button">Edit</a>
+              {% elif vars.type_user == 'currentuser' %}
+                  <a href="/members/myprofile/edit" class="btn btn-primary" role="button">Edit</a>
               {% endif %}
-
 
                <a href="/members" class="btn btn-default" role="button">Members</a>
              </p>

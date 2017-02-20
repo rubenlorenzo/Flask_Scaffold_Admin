@@ -15,13 +15,13 @@
 <!-- First_name & last_name -->
   {% if (user.first_name==" " and user.last_name==" ") or name=="True" %}
     <!-- Form -->
-    <form action="" method="POST" class="form" role="form">
+    <form action="" method="POST" class="form" role="form_user">
       <div class="row">
         <div class="col-sm-6 col-md-5 col-lg-4">
-        {{ form.hidden_tag() }}
-        {{ render_field(form.first_name, tabindex=240 ) }}
-        {{ render_field(form.last_name, tabindex=240) }}
-        {{ render_submit_field(form.submit) }}
+        {{ form_user.hidden_tag() }}
+        {{ render_field(form_user.first_name, tabindex=240, value=user.first_name ) }}
+        {{ render_field(form_user.last_name, tabindex=240, value=user.last_name) }}
+        {{ render_submit_field(form_user.submit) }}
         </div>
       </div>
     </form>
