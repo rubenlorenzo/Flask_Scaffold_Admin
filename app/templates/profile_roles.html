@@ -6,7 +6,7 @@
       <!-- Form add roles -->
       <form action="/members/roles/add?user={{user.username}}" method="POST" class="form_role" role="form">
         <div class="row">
-          <div class="col-sm-6 col-md-5 col-lg-4">
+          <div class="col-sm-6 col-md-7 col-lg-8">
             {{ form_user.hidden_tag() }}
             {{ render_field(form_role.name, label_visible=false, placeholder="Add role") }}
 
@@ -20,7 +20,7 @@
       <!-- Form select / deselect roles to user -->
       <form action="/members/roles/add/{{user.username}}" method="POST" class="form_role_user" role="form">
         <div class="row">
-          <div class="col-sm-6 col-md-5 col-lg-4">
+          <div class="col-sm-6 col-md-7 col-lg-8">
             {{ form_user.hidden_tag() }}
 
             {# User roles are compared to general roles #}

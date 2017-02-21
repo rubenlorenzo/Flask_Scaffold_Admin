@@ -13,21 +13,24 @@ from sqlalchemy.sql import exists
 #Root - route
 @app.route('/')
 def home_page():
-    return render_template('index.html')
+    return render_template('index.html', title="Home")
 
 
 #Members - route
 @app.route('/members')
 @login_required
 def members_page():
-    return render_template('members.html', users=db.session.query(User).all())
+    return render_template('members.html', users=db.session.query(User).all(),
+        title="Members")
 
 
 #Users_profile - route
 @app.route('/members/profile/<username>')
 @login_required
 def profile(username):
-    return render_template('profile.html', user=db.session.query(User).filter(User.username == username).first())
+    return render_template('profile.html',
+        user=db.session.query(User).filter(User.username == username).first(),
+         title="Members", subtitle="Profile")
 
 
 #User_profile_edit - route
@@ -50,7 +53,8 @@ def edit_profile():
 
     # Process GET or invalid POST
     return render_template('edit_profile.html',
-                           form_user=form_user, name=request.args.get('name'))
+        form_user=form_user, name=request.args.get('name'), title="Members",
+        subtitle="Edit profile")
 
 #Admin_profile_edit - route
 @app.route('/members/myprofile/edit/admin', methods=['GET', 'POST'])
@@ -71,13 +75,15 @@ def edit_profile_admin():
         # Redirect to home page
         return redirect(url_for('edit_profile_admin'))
 
-    return render_template('edit_profile_admin.html', form_user=form_user, form_role=form_role, roles=db.session.query(Role).all(), name=request.args.get('name'))
+    return render_template('edit_profile_admin.html', form_user=form_user,
+        form_role=form_role, roles=db.session.query(Role).all(),
+        name=request.args.get('name'), title="Members", subtitle="Profile edit")
 
 #Admin_page - route
 @app.route('/admin/page')
 @roles_required('admin')
 def admin_page():
-    return render_template('admin_page.html')
+    return render_template('admin_page.html', title="Admin")
 
 
 #Edit_profile_roles - route
@@ -92,7 +98,7 @@ def  edit_profile_roles(username):
     return render_template(
         'edit_profile_roles.html',
          user=user,
-          form_user=form_user, form_role=form_role,roles=db.session.query(Role).all())
+          form_user=form_user, form_role=form_role,roles=db.session.query(Role).all(), title="Members", subtitle="Profile edit")
 
 
 #Add_role - route

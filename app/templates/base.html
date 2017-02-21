@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>UsersApp</title>
+  <title>UsersApp - {{title}}{% if subtitle %}, {{subtitle}}{% endif %} page</title>
 
   <!-- Latest compiled and minified CSS -->
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -46,8 +46,23 @@
          {%- endwith %}
       {% endblock %}
 
-      <!-- Content -->
-      {% block main %}{% block content %}{% endblock %}{% endblock %}
+
+      <div class="row">
+        <!-- vertical menu -->
+        <div id="vertical-menu" class="col-sm-3 col-md-2 col-lg-2">
+          <ul class="nav nav-pills nav-stacked">
+            <li role="presentation" {% if title == "Home" %} class="active" {% endif %}><a href="/">Home</a></li>
+            <li role="presentation" {% if title == "Members" %} class="active" {% endif %}><a href="/members">Members</a></li>
+            <li role="presentation"> {% if title == "Roles" %} class="active" {% endif %}<a href="/roles">Roles</a></li>
+          </ul>
+        </div>
+        <!-- Content -->
+        <div class="col-sm-8 col-md-9 col-lg-9">
+          {% block main %}{% block content %}{% endblock %}{% endblock %}
+        </div>
+      </div>
+
+
 
       </div>
 

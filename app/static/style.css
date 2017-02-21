@@ -87,8 +87,6 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
 
 }
 
-
-
 #submit_roles_user{
   margin-top: 0.9px;
 }
@@ -123,4 +121,25 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
 
 .dropdown-menu {
     background-color: #e8e8e8;
+}
+
+/* Vertical-menu */
+#vertical-menu{
+  margin-top: 2em;
+  margin-right: 2em;
+  border-right: 1px solid  #ddd;
+}
+.nav-pills > li > a{
+  border: 1px solid  #F7F7F7;
+  border-radius: 0px;
+}
+.nav-pills > li.active > a{
+  background-color: #01A158;
+
+}
+
+.nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
+  background-color: #faece1;
+  border-color: #01A158;
+  color:#d41111;
 }
