@@ -17,7 +17,7 @@
     <!-- Form -->
     <form action="" method="POST" class="form" role="form_user">
       <div class="row">
-        <div class="col-sm-6 col-md-7 col-lg-8">
+        <div class="col-sm-8 col-md-8 col-lg-8">
         {{ form_user.hidden_tag() }}
         {{ render_field(form_user.first_name, tabindex=240, value=user.first_name ) }}
         {{ render_field(form_user.last_name, tabindex=240, value=user.last_name) }}
@@ -43,7 +43,7 @@
 
 {% endblock %}
 
-<!-- Block buttons -->
+<!-- Not buttons -->
 {% block buttons %}
 
 {% endblock %}

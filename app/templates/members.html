@@ -6,29 +6,34 @@
     <p>This page can only be accessed by authenticated users.</p><br/>
 
     <!-- List Members -->
-    <div class="list-group" id="list_items">
+    <div class="row">
+      <div class="col-sm-12 col-md-10 col-lg-8">
+        <div class="list-group" id="list_items">
 
-      <!-- Item  active/inactive-->
-       {% for u in users %}
-         {% if u.username == current_user.username %}
-          <a href="/members/profile/{{u.username}}" class="list-group-item active">
-        {% else %}
-          <a href="/members/profile/{{u.username}}" class="list-group-item">
-        {% endif %}
+          <!-- Item  active/inactive-->
+           {% for u in users %}
+             {% if u.username == current_user.username %}
+              <a href="/members/profile/{{u.username}}" class="list-group-item active">
+            {% else %}
+              <a href="/members/profile/{{u.username}}" class="list-group-item">
+            {% endif %}
 
-        <!-- Username -->
-        <h4><span class="glyphicon glyphicon-user"> {{u.username}}</span></h4>
+            <!-- Username -->
+            <h4><span class="glyphicon glyphicon-user"> {{u.username}}</span></h4>
 
-          <!-- Roles -->
-        <span class="glyphicon glyphicon-eye-open">
-        {% for r in u.roles %}
-          {{r.name }}
-        {% endfor %}
-        </span>
+              <!-- Roles -->
+            <span class="glyphicon glyphicon-eye-open">
+            {% for r in u.roles %}
+              {{r.name }}
+            {% endfor %}
+            </span>
 
-        </a>
-        {% endfor %}
-        
+            </a>
+            {% endfor %}
+
+        </div>
+      </div>
     </div>
+
 
 {% endblock %}

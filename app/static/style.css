@@ -122,6 +122,8 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
 .dropdown-menu {
     background-color: #e8e8e8;
 }
+/* -------------- */
+
 
 /* Vertical-menu */
 #vertical-menu{
@@ -142,4 +144,11 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
   background-color: #faece1;
   border-color: #01A158;
   color:#d41111;
+}
+/* --------------- */
+
+
+/* Roles */
+.list-group-item p{
+  text-align: right;
 }

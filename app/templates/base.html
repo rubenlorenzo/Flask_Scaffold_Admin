@@ -21,6 +21,7 @@
 <!-- Style from page -->
 <link rel="stylesheet"  type="text/css" href="/static/style.css">
 
+
 </head>
 <body>
 
@@ -46,14 +47,16 @@
          {%- endwith %}
       {% endblock %}
 
+      <!-- Modal -->
+      {% include 'modal.html' %}
 
       <div class="row">
         <!-- vertical menu -->
-        <div id="vertical-menu" class="col-sm-3 col-md-2 col-lg-2">
+        <div id="vertical-menu" class="col-sm-2 col-md-2 col-lg-2">
           <ul class="nav nav-pills nav-stacked">
             <li role="presentation" {% if title == "Home" %} class="active" {% endif %}><a href="/">Home</a></li>
             <li role="presentation" {% if title == "Members" %} class="active" {% endif %}><a href="/members">Members</a></li>
-            <li role="presentation"> {% if title == "Roles" %} class="active" {% endif %}<a href="/roles">Roles</a></li>
+            <li role="presentation" {% if title == "Roles" %} class="active" {% endif %}><a href="/roles">Roles</a></li>
           </ul>
         </div>
         <!-- Content -->

@@ -33,10 +33,10 @@ def profile(username):
          title="Members", subtitle="Profile")
 
 
-#User_profile_edit - route
+#CurrentUser_profile_edit - route
 @app.route('/members/myprofile/edit', methods=['GET', 'POST'])
 @login_required
-def edit_profile():
+def edit_myprofile():
     # Initialize form
     form_user = UserForm()
 
@@ -49,17 +49,17 @@ def edit_profile():
         db.session.commit()
 
         # Redirect to home page
-        return redirect(url_for('edit_profile'))
+        return redirect(url_for('edit_myprofile'))
 
     # Process GET or invalid POST
-    return render_template('edit_profile.html',
+    return render_template('edit_myprofile.html',
         form_user=form_user, name=request.args.get('name'), title="Members",
         subtitle="Edit profile")
 
-#Admin_profile_edit - route
+#CurrentUser_admin_role_profile_edit - route
 @app.route('/members/myprofile/edit/admin', methods=['GET', 'POST'])
 @roles_required('admin')
-def edit_profile_admin():
+def edit_myprofile_roles():
     # Initialize form
     form_user = UserForm()
     form_role = RoleForm()
@@ -73,9 +73,9 @@ def edit_profile_admin():
         db.session.commit()
 
         # Redirect to home page
-        return redirect(url_for('edit_profile_admin'))
+        return redirect(url_for('edit_myprofile_roles'))
 
-    return render_template('edit_profile_admin.html', form_user=form_user,
+    return render_template('edit_myprofile_roles.html', form_user=form_user,
         form_role=form_role, roles=db.session.query(Role).all(),
         name=request.args.get('name'), title="Members", subtitle="Profile edit")
 
@@ -92,23 +92,32 @@ def admin_page():
 def  edit_profile_roles(username):
     user=db.session.query(User).filter(User.username == username).first()
 
+    # Initialize form
     form_user = UserForm()
     form_role = RoleForm()
 
-    return render_template(
-        'edit_profile_roles.html',
-         user=user,
-          form_user=form_user, form_role=form_role,roles=db.session.query(Role).all(), title="Members", subtitle="Profile edit")
+    return render_template('edit_profile_roles.html', user=user, form_user=form_user,
+        form_role=form_role,roles=db.session.query(Role).all(), title="Members",
+        subtitle="Profile edit")
 
+#Roles - route
+@app.route('/roles')
+@roles_required('admin')
+def roles_page():
+    form_role = RoleForm()
+
+    return render_template('roles.html', form_role=form_role, roles=db.session.query(Role).all(), title="Roles")
 
 #Add_role - route
-@app.route('/members/roles/add' ,methods=['GET','POST'])
 @roles_required('admin')
+@app.route('/roles/add' ,methods=['GET','POST'])
 def add_role():
+    # Initialize form
     form_role = RoleForm()
 
     # Process valid POST
     if request.method == 'POST' and form_role.validate():
+
         #Add role, if role not exist
         if not Role.query.filter(Role.name==form_role.name.data).first():
             role = Role(name=form_role.name.data)
@@ -117,42 +126,74 @@ def add_role():
         else:
             flash(('Role '+form_role.name.data+' exist.'), 'success')
 
-        return redirect(url_for('edit_profile_roles', username=request.args.get('user')))
+    return "None"
 
-    return redirect(url_for('edit_profile_roles', username=request.args.get('user')))
 
 #Add_role to user - route
 @app.route('/members/roles/add/<username>' ,methods=['GET','POST'])
 @roles_required('admin')
 def add_role_user(username) :
     user=db.session.query(User).filter(User.username == username).first()
+
+    #User is current_user
+    user_is_current_user=False
+    if user == current_user:
+        user_is_current_user=True
+
     form_role = RoleForm()
 
     if request.method == 'POST' and form_role.validate() :
         #Remove deselect roles
         remove_roles= [ ]
 
+        #User Roles
+        role_admin=False
         for r_user in user.roles :
             role_status=False
 
+            #Role admin user
+            if r_user.name == "admin" :
+                role_admin=True
+
+            #Roles checks
             for r_name in request.form.getlist("name") :
+                #Compare with roles user, true If the role remains checked
                 if r_user.name == r_name :
                     role_status=True
-
+            #Add array remove_roles, If the role does not remains checked
             if not role_status :
                 remove_roles.append(r_user.name)
 
+
+        #Removes roles that are not checked now
         for r_role in remove_roles :
             role=db.session.query(Role).filter(Role.name==r_role).first()
             user.roles.remove(role)
             db.session.commit()
 
-        #Add selected  roles
+        #Add roles checked
         for r_name in request.form.getlist("name") :
             role=db.session.query(Role).filter(Role.name==r_name).first()
 
+            #If it does not belong to the user it adds it
             if not db.session.query(User).join(User.roles).filter(User.username==user.username, Role.name==role.name).first() :
                 user.roles.append(role)
                 db.session.commit()
 
-    return redirect(url_for('edit_profile_roles', username=username))
+    if user_is_current_user and role_admin :
+        return redirect(url_for('edit_myprofile_roles', username=username))
+    else:
+        return redirect(url_for('edit_profile_roles', username=username))
+
+#Remove_role - route
+@app.route('/roles/remove', methods=['POST'])
+@roles_required('admin')
+def remove_role():
+
+    if request.method == 'POST' :
+        role_remove=db.session.query(Role).filter(Role.name==request.form["role_remove"]).first()
+
+        db.session.delete(role_remove)
+        db.session.commit()
+
+    return "None"
