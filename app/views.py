@@ -10,6 +10,14 @@ from array import array
 from sqlalchemy.sql import exists
 
 
+def current_user_is_admin() :
+    value = False
+    for r in current_user.roles:
+        if r.name == "admin":
+            value= True
+    return value
+
+
 #Root - route
 @app.route('/')
 def home_page():
@@ -21,7 +29,7 @@ def home_page():
 @login_required
 def members_page():
     return render_template('members.html', users=db.session.query(User).all(),
-        title="Members")
+        title="Members", current_user_is_admin=current_user_is_admin())
 
 
 #Users_profile - route
@@ -30,7 +38,7 @@ def members_page():
 def profile(username):
     return render_template('profile.html',
         user=db.session.query(User).filter(User.username == username).first(),
-         title="Members", subtitle="Profile")
+         title="Members", subtitle="Profile", current_user_is_admin=current_user_is_admin() )
 
 
 #CurrentUser_profile_edit - route
@@ -194,6 +202,17 @@ def remove_role():
         role_remove=db.session.query(Role).filter(Role.name==request.form["role_remove"]).first()
 
         db.session.delete(role_remove)
+        db.session.commit()
+
+    return "None"
+
+@app.route('/user/remove', methods=['POST'])
+@roles_required('admin')
+def remove_user():
+    if request.method == 'POST' :
+        user_remove=db.session.query(User).filter(User.username==request.form["user_remove"]).first()
+
+        db.session.delete(user_remove)
         db.session.commit()
 
     return "None"

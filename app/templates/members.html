@@ -3,11 +3,21 @@
 
     <!-- Title -->
     <h2>Members page</h2>
-    <p>This page can only be accessed by authenticated users.</p><br/>
-
+    <p> This page can only be accessed by authenticated users.</p>
+    {% if current_user_is_admin %}
+      <p>
+        Your <b>Admin role</b> allows you to <b>add users</b>, <b>remove users</b> and <b>change users roles</b>.
+      </p>
+    {% endif %}
+    <br>
     <!-- List Members -->
     <div class="row">
       <div class="col-sm-12 col-md-10 col-lg-8">
+        {% if current_user_is_admin %}
+          <div>
+            <a href="/user/register" class="btn" role="button">Add user</a>
+          </div>
+        {% endif %}
         <div class="list-group" id="list_items">
 
           <!-- Item  active/inactive-->

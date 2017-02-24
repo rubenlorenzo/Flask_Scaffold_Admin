@@ -27,33 +27,40 @@ input[type="text"]{
 }
 
 /* Buttons */
+
 .btn{
   border-radius: 0px;
+  border-color: #ddd;
+  background-color: #eaeaea;
 }
 
+.btn-danger{
+  background-color: #ed9393;
+}
+/*
 .btn-primary {
   background-color: #01A158;
-  border-color: #01A158;
+  border-color: #ddd;
 
 }
 
 .btn-primary:hover{
   background-color: #ffffff;
   color:#797882;
-}
+}*/
 
 /* List -group  */
-.list-group-item:first-child, .list-group-item:last-child{
+.list-group-item:first-child, .list-group-item:last-child {
     border-radius: 0px;
 }
 
-.list-group-item.active {
+.list-group-item.active, .btn-primary{
   background-color: #01A158;
-  border-color: #01A158;
+  border-color: #ddd;
   z-index: 2;
 }
 
-a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus, .list-group-item.active:hover  {
+a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus, .list-group-item.active:hover, .btn:hover,  .btn:focus{
   background-color: #faece1;
   border-color: #01A158;
   color:#d41111;
