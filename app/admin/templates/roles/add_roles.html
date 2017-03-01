@@ -4,7 +4,7 @@
 
       <b>Roles</b>
       <!-- Form add roles -->
-      <form action="/roles/add" method="POST" id="form_role" role="form">
+      <form action="" method="POST" id="form_role" role="form">
         <div class="row">
           <div class="col-sm-8 col-md-8 col-lg-8">
             {{ form_role.hidden_tag() }}
@@ -25,7 +25,7 @@
     $("#form_role").submit(function(event) {
       /* Act on the event desactive submit*/
       event.preventDefault();
-      $.post("/roles/add", data= $("#form_role").serialize(), function(){
+      $.post("{{ url_for('admin.add_role') }}", data= $("#form_role").serialize(), function(){
         location.reload();
       });
     });

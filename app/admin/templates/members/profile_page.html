@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_admin.html" %}
 
 {% block content %}
     <!-- Title -->
@@ -49,11 +49,11 @@
               {# Buttons according to role and user #}
                 {# Role admin and current_user #}
                 {% if current_user_is_admin and  current_user.username == user.username %}
-                  <a href="/members/myprofile/edit/admin" class="btn btn-primary" role="button">Edit</a>
+                  <a href="{{ url_for('admin.edit_myprofile_roles') }}" class="btn btn-primary" role="button">Edit</a>
 
                 {# Role admin  #}
                 {% elif current_user_is_admin %}
-                  <a href="/members/profile/roles/edit/{{user.username}}" class="btn btn-primary" role="button">Edit</a>
+                  <a href="{{ url_for('admin.edit_profile_roles', username = user.username) }}"class="btn btn-primary" role="button">Edit</a>
 
                   <!-- Button Remove user -->
                   <a href="#modal" class="btn btn-danger" id="btn_delete_user" role="button">Remove <b>User</b></a>
@@ -62,12 +62,12 @@
                     $("#btn_delete_user").click(function() {
                       //Change message modal and sow
 
-                      $("#modal #message-modal").html("Do you accept your remove to <b>{{user.username}}</b>, user?");
+                      $("#modal #message-modal").html("Do you accept your remove to <b>user.username</b>, user?");
                       $("#modal").modal('show');
 
                       //Click accept modal, it remove user
                       $("#modal-accept").click(function(){
-                        $.post("/user/remove", data= {"user_remove": "{{user.username}}" }, function(){
+                        $.post("{{ url_for('admin.remove_user') }}", data= {"user_remove": "{{user.username}}" }, function(){
                           location.reload();
                         });
                       });
@@ -76,7 +76,7 @@
 
                 {# Only current_user #}
                 {% elif  current_user.username == user.username and current_user_is_admin==False   %}
-                  <a href="/members/myprofile/edit" class="btn btn-primary" role="button">Edit</a>
+                  <a href="{{ url_for('admin.edit_myprofile') }}" class="btn btn-primary" role="button">Edit</a>
                 {% endif %}
              </p>
             {% endblock %}

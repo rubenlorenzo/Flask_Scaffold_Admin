@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_admin.html" %}
   {% block content %}
 
     <!-- Title -->
@@ -23,9 +23,9 @@
           <!-- Item  active/inactive-->
            {% for u in users %}
              {% if u.username == current_user.username %}
-              <a href="/members/profile/{{u.username}}" class="list-group-item active">
+              <a href="{{ url_for('admin.profile_page', username = u.username) }}" class="list-group-item active">
             {% else %}
-              <a href="/members/profile/{{u.username}}" class="list-group-item">
+              <a href="{{ url_for('admin.profile_page', username = u.username) }}" class="list-group-item">
             {% endif %}
 
             <!-- Username -->

@@ -1,13 +1,16 @@
+
 from flask import render_template
 from flask import request, url_for, redirect, flash
 from flask_user import login_required, confirm_email_required, roles_required, current_user
-from app import app, db
-from app.models import User, Role, UserRoles
+from . import admin, db
+from .models import User, Role, UserRoles
 from sqlalchemy.orm import aliased
 from sqlalchemy.exc import IntegrityError
-from forms import UserForm, RoleForm
+from .forms import UserForm, RoleForm
 from array import array
 from sqlalchemy.sql import exists
+
+
 
 
 def current_user_is_admin() :
@@ -19,30 +22,29 @@ def current_user_is_admin() :
 
 
 #Root - route
-@app.route('/')
+@admin.route('/')
 def home_page():
     return render_template('index.html', title="Home")
 
-
 #Members - route
-@app.route('/members')
+@admin.route('/members')
 @login_required
 def members_page():
-    return render_template('members.html', users=db.session.query(User).all(),
+    return render_template('members/members_page.html', users=db.session.query(User).all(),
         title="Members", current_user_is_admin=current_user_is_admin())
 
 
 #Users_profile - route
-@app.route('/members/profile/<username>')
+@admin.route('/members/profile/<username>')
 @login_required
-def profile(username):
-    return render_template('profile.html',
+def profile_page(username):
+    return render_template('members/profile_page.html',
         user=db.session.query(User).filter(User.username == username).first(),
          title="Members", subtitle="Profile", current_user_is_admin=current_user_is_admin() )
 
 
 #CurrentUser_profile_edit - route
-@app.route('/members/myprofile/edit', methods=['GET', 'POST'])
+@admin.route('/members/myprofile/edit', methods=['GET', 'POST'])
 @login_required
 def edit_myprofile():
     # Initialize form
@@ -57,15 +59,15 @@ def edit_myprofile():
         db.session.commit()
 
         # Redirect to home page
-        return redirect(url_for('edit_myprofile'))
+        return redirect(url_for('admin.edit_myprofile'))
 
     # Process GET or invalid POST
-    return render_template('edit_myprofile.html',
+    return render_template('members/edit_myprofile.html',
         form_user=form_user, name=request.args.get('name'), title="Members",
         subtitle="Edit profile")
 
 #CurrentUser_admin_role_profile_edit - route
-@app.route('/members/myprofile/edit/admin', methods=['GET', 'POST'])
+@admin.route('/members/myprofile/edit/admin', methods=['GET', 'POST'])
 @roles_required('admin')
 def edit_myprofile_roles():
     # Initialize form
@@ -81,21 +83,15 @@ def edit_myprofile_roles():
         db.session.commit()
 
         # Redirect to home page
-        return redirect(url_for('edit_myprofile_roles'))
+        return redirect(url_for('admin.edit_myprofile_roles'))
 
-    return render_template('edit_myprofile_roles.html', form_user=form_user,
+    return render_template('members/edit_myprofile_roles.html', form_user=form_user,
         form_role=form_role, roles=db.session.query(Role).all(),
         name=request.args.get('name'), title="Members", subtitle="Profile edit")
 
-#Admin_page - route
-@app.route('/admin/page')
-@roles_required('admin')
-def admin_page():
-    return render_template('admin_page.html', title="Admin")
-
 
 #Edit_profile_roles - route
-@app.route('/members/profile/roles/edit/<username>' ,methods=['GET','POST'])
+@admin.route('/members/profile/roles/edit/<username>' ,methods=['GET','POST'])
 @roles_required('admin')
 def  edit_profile_roles(username):
     user=db.session.query(User).filter(User.username == username).first()
@@ -104,21 +100,21 @@ def  edit_profile_roles(username):
     form_user = UserForm()
     form_role = RoleForm()
 
-    return render_template('edit_profile_roles.html', user=user, form_user=form_user,
+    return render_template('members/edit_profile_roles.html', user=user, form_user=form_user,
         form_role=form_role,roles=db.session.query(Role).all(), title="Members",
         subtitle="Profile edit")
 
 #Roles - route
-@app.route('/roles')
+@admin.route('/roles')
 @roles_required('admin')
 def roles_page():
     form_role = RoleForm()
 
-    return render_template('roles.html', form_role=form_role, roles=db.session.query(Role).all(), title="Roles")
+    return render_template('roles/roles_page.html', form_role=form_role, roles=db.session.query(Role).all(), title="Roles")
 
 #Add_role - route
+@admin.route('/roles/add' ,methods=['GET','POST'])
 @roles_required('admin')
-@app.route('/roles/add' ,methods=['GET','POST'])
 def add_role():
     # Initialize form
     form_role = RoleForm()
@@ -138,7 +134,7 @@ def add_role():
 
 
 #Add_role to user - route
-@app.route('/members/roles/add/<username>' ,methods=['GET','POST'])
+@admin.route('/members/roles/add/<username>' ,methods=['GET','POST'])
 @roles_required('admin')
 def add_role_user(username) :
     user=db.session.query(User).filter(User.username == username).first()
@@ -189,12 +185,12 @@ def add_role_user(username) :
                 db.session.commit()
 
     if user_is_current_user and role_admin :
-        return redirect(url_for('edit_myprofile_roles', username=username))
+        return redirect(url_for('admin.edit_myprofile_roles', username=username))
     else:
-        return redirect(url_for('edit_profile_roles', username=username))
+        return redirect(url_for('admin.edit_profile_roles', username=username))
 
 #Remove_role - route
-@app.route('/roles/remove', methods=['POST'])
+@admin.route('/roles/remove', methods=['POST'])
 @roles_required('admin')
 def remove_role():
 
@@ -206,7 +202,7 @@ def remove_role():
 
     return "None"
 
-@app.route('/user/remove', methods=['POST'])
+@admin.route('/user/remove', methods=['POST'])
 @roles_required('admin')
 def remove_user():
     if request.method == 'POST' :
@@ -214,5 +210,5 @@ def remove_user():
 
         db.session.delete(user_remove)
         db.session.commit()
-
+        
     return "None"
