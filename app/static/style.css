@@ -77,6 +77,7 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
 .thumbnail{
   border-radius: 0px;
 }
+
 #avatar{
   font-size: 88px;
   margin-top: 0.4em;
@@ -125,6 +126,14 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
     background-color: #01A158;
 
 }
+
+.navbar-default .navbar-left li a.active{
+  color:  #01A158;
+}
+.navbar-default .navbar-left li a:hover{
+  color:  #F7F7F7;
+}
+
 
 .dropdown-menu {
     background-color: #e8e8e8;

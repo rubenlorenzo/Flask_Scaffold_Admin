@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+
+
+{% block vertical_menu %}
+  <li role="presentation" {% if title == "City" %} class="active" {% endif %}><a href="{{ url_for('home.city_page') }}">City</a></li>
+  <li role="presentation" {% if title == "About" %} class="active" {% endif %}><a href="{{ url_for('home.about_page') }}">About</a></li>
+
+{% endblock %}

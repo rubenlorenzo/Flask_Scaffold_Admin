@@ -8,10 +8,10 @@
   {% endif %}
 {% endfor %}
 
-{% block vertical_menu %}
-  <li role="presentation" {% if title == "Home" %} class="active" {% endif %}><a href="{{ url_for('admin.home_page') }}">Home</a></li>
+{% block vertical_menu %}  
   <li role="presentation" {% if title == "Members" %} class="active" {% endif %}><a href="{{ url_for('admin.members_page') }}">Members</a></li>
   {% if vars.current_user_is_admin %}
   <li role="presentation" {% if title == "Roles" %} class="active" {% endif %}><a href="{{ url_for('admin.roles_page') }}">Roles</a></li>
   {% endif %}
+  <li role="presentation" {% if title == "About" %} class="active" {% endif %}><a href="{{ url_for('admin.about_page') }}">About</a></li>
 {% endblock %}

@@ -24,14 +24,19 @@ def current_user_is_admin() :
 #Root - route
 @admin.route('/')
 def home_page():
-    return render_template('index.html', title="Home")
+    return redirect(url_for('admin.members_page'))
+
+#About - route
+@admin.route('/about')
+def about_page():
+    return render_template('about_admin_page.html', blueprint_title="Admin", title="About")
 
 #Members - route
 @admin.route('/members')
 @login_required
 def members_page():
     return render_template('members/members_page.html', users=db.session.query(User).all(),
-        title="Members", current_user_is_admin=current_user_is_admin())
+        blueprint_title="Admin", title="Members", current_user_is_admin=current_user_is_admin())
 
 
 #Users_profile - route
@@ -40,7 +45,8 @@ def members_page():
 def profile_page(username):
     return render_template('members/profile_page.html',
         user=db.session.query(User).filter(User.username == username).first(),
-         title="Members", subtitle="Profile", current_user_is_admin=current_user_is_admin() )
+        blueprint_title="Admin", title="Members", subtitle="Profile",
+        current_user_is_admin=current_user_is_admin() )
 
 
 #CurrentUser_profile_edit - route
@@ -63,8 +69,8 @@ def edit_myprofile():
 
     # Process GET or invalid POST
     return render_template('members/edit_myprofile.html',
-        form_user=form_user, name=request.args.get('name'), title="Members",
-        subtitle="Edit profile")
+        form_user=form_user, name=request.args.get('name'),  blueprint_title="Admin",
+        title="Members", subtitle="Edit profile")
 
 #CurrentUser_admin_role_profile_edit - route
 @admin.route('/members/myprofile/edit/admin', methods=['GET', 'POST'])
@@ -87,7 +93,8 @@ def edit_myprofile_roles():
 
     return render_template('members/edit_myprofile_roles.html', form_user=form_user,
         form_role=form_role, roles=db.session.query(Role).all(),
-        name=request.args.get('name'), title="Members", subtitle="Profile edit")
+        name=request.args.get('name'),  blueprint_title="Admin", title="Members",
+        subtitle="Profile edit")
 
 
 #Edit_profile_roles - route
@@ -101,7 +108,7 @@ def  edit_profile_roles(username):
     form_role = RoleForm()
 
     return render_template('members/edit_profile_roles.html', user=user, form_user=form_user,
-        form_role=form_role,roles=db.session.query(Role).all(), title="Members",
+        form_role=form_role,roles=db.session.query(Role).all(),  blueprint_title="Admin", title="Members",
         subtitle="Profile edit")
 
 #Roles - route
@@ -110,7 +117,8 @@ def  edit_profile_roles(username):
 def roles_page():
     form_role = RoleForm()
 
-    return render_template('roles/roles_page.html', form_role=form_role, roles=db.session.query(Role).all(), title="Roles")
+    return render_template('roles/roles_page.html', form_role=form_role, roles=db.session.query(Role).all(),
+      blueprint_title="Admin", title="Roles")
 
 #Add_role - route
 @admin.route('/roles/add' ,methods=['GET','POST'])
@@ -210,5 +218,5 @@ def remove_user():
 
         db.session.delete(user_remove)
         db.session.commit()
-        
+
     return "None"
