@@ -1,14 +1,18 @@
-
+import os
+from app import app
 from flask import render_template
-from flask import request, url_for, redirect, flash
+from flask import request, url_for, redirect, flash, send_from_directory, send_file
 from flask_user import login_required, confirm_email_required, roles_required, current_user
 from . import admin, db
 from .models import User, Role, UserRoles
 from sqlalchemy.orm import aliased
 from sqlalchemy.exc import IntegrityError
-from .forms import UserForm, RoleForm
+from .forms import UserForm, RoleForm, AvatarUploadForm
 from array import array
 from sqlalchemy.sql import exists
+from werkzeug.utils import secure_filename
+
+
 
 
 
@@ -19,6 +23,16 @@ def current_user_is_admin() :
         if r.name == "admin":
             value= True
     return value
+
+def save_avatar():
+    f = request.files['photo']
+    filename = secure_filename(f.filename)
+    f.save(os.path.join(os.getenv('AVATAR_FOLDER') , str(current_user.id)+"_avatar"))
+
+def remove_avatar(user):
+    folder=""+os.getenv('AVATAR_FOLDER');
+    filename=str(user.id)+"_avatar"
+    os.remove(folder+"/"+filename)
 
 
 #Root - route
@@ -55,8 +69,9 @@ def profile_page(username):
 def edit_myprofile():
     # Initialize form
     form_user = UserForm()
+    form_avatar_upload = AvatarUploadForm()
 
-    # Process valid POST
+    # Process valid POST- form_user
     if request.method == 'POST' and form_user.validate():
         # Copy form fields to user_profile fields
         form_user.populate_obj(current_user)
@@ -67,10 +82,18 @@ def edit_myprofile():
         # Redirect to home page
         return redirect(url_for('admin.edit_myprofile'))
 
+    # Process valid POST - form_avatar_upload
+    if  request.method == 'POST' and form_avatar_upload.validate():
+        save_avatar()
+        return redirect(url_for('admin.edit_myprofile'))
+    elif request.method == 'POST':
+        flash(('File isn\'t image'), 'success')
+        return redirect(url_for('admin.edit_myprofile'))
+
     # Process GET or invalid POST
     return render_template('members/edit_myprofile.html',
-        form_user=form_user, name=request.args.get('name'),  blueprint_title="Admin",
-        title="Members", subtitle="Edit profile")
+        form_user=form_user, form_avatar_upload=form_avatar_upload,
+         blueprint_title="Admin", title="Members", subtitle="Edit profile")
 
 #CurrentUser_admin_role_profile_edit - route
 @admin.route('/members/myprofile/edit/admin', methods=['GET', 'POST'])
@@ -79,8 +102,9 @@ def edit_myprofile_roles():
     # Initialize form
     form_user = UserForm()
     form_role = RoleForm()
+    form_avatar_upload = AvatarUploadForm()
 
-    # Process valid POST
+    # Process valid POST - form_user
     if request.method == 'POST' and form_user.validate():
         # Copy form fields to user_profile fields
         form_user.populate_obj(current_user)
@@ -91,9 +115,18 @@ def edit_myprofile_roles():
         # Redirect to home page
         return redirect(url_for('admin.edit_myprofile_roles'))
 
+    # Process valid POST - form_avatar_upload
+    if  form_avatar_upload.validate_on_submit():
+        save_avatar()
+        return redirect(url_for('admin.edit_myprofile_roles'))
+    elif request.method == 'POST':
+        flash(('File isn\'t image'), 'success')
+        return redirect(url_for('admin.edit_myprofile_roles'))
+
+
     return render_template('members/edit_myprofile_roles.html', form_user=form_user,
-        form_role=form_role, roles=db.session.query(Role).all(),
-        name=request.args.get('name'),  blueprint_title="Admin", title="Members",
+        form_role=form_role, form_avatar_upload=form_avatar_upload,
+        roles=db.session.query(Role).all(),  blueprint_title="Admin", title="Members",
         subtitle="Profile edit")
 
 
@@ -210,6 +243,7 @@ def remove_role():
 
     return "None"
 
+#Remove_user - route
 @admin.route('/user/remove', methods=['POST'])
 @roles_required('admin')
 def remove_user():
@@ -219,4 +253,16 @@ def remove_user():
         db.session.delete(user_remove)
         db.session.commit()
 
+        remove_avatar(user_remove)
+
     return "None"
+
+#Load_avatar -route
+@admin.route('/members/loaded/avatar/<username>')
+@login_required
+def loaded_avatar(username):
+    user=db.session.query(User).filter(User.username==username).first()
+    folder=""+os.getenv('AVATAR_FOLDER');
+    filename=str(user.id)+"_avatar"
+    image_path="../"+folder+"/"+filename
+    return send_file(image_path, mimetype='image/png')

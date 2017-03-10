@@ -20,6 +20,9 @@ class ConfigClass(object):
     # Flask-User settings
     USER_APP_NAME        = "UsersApp"                # Used by email templates
 
+    #Upload folders
+    AVATAR_FOLDER = os.getenv('AVATAR_FOLDER',            'app/admin/avatar_photo')    
+
 #Admin user creation settings
 class CreateAdminUser(object):
     ADMIN_USER = os.getenv('ADMIN_USER',        'admin')

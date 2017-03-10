@@ -8,28 +8,64 @@
 
 <!-- Macros Form -->
 {% from "macros/form_macros.html" import render_field, render_submit_field%}
+{% from "macros/bootstrap_wtf.html" import bootstrap_field %}
 
-<!-- Block edit -->
-{% block profile_edit %}
+<!-- Block edit avatar-->
+{% block profile_edit_avatar %}
+  <!-- Link edit -->
+  <a class="edit_avatar" ><span class="glyphicon glyphicon-pencil"></span></a>
+  <!-- Form -->
+  <div class="row edit_avatar">
+    <div class="col-sm-8 col-md-8 col-lg-8">
+      <form  action="" method="POST" enctype="multipart/form-data">
+        {{ form_avatar_upload.hidden_tag() }}
+        {{render_field(form_avatar_upload.photo,label_visible=False)}}
+        {{ render_submit_field(form_avatar_upload.submit) }}
+      </form>
+    </div>
+  </div>
 
-<!-- First_name & last_name -->
-  {% if (user.first_name==" " and user.last_name==" ") or name=="True" %}
-    <!-- Form -->
-    <form action="" method="POST" class="form" role="form_user">
-      <div class="row">
-        <div class="col-sm-8 col-md-8 col-lg-8">
+  <!-- Show & Hide - Form -->
+  <script type="text/javascript">
+    $("div.edit_avatar").hide();
+    $("a.edit_avatar").click(function() {
+      if($("div.edit_avatar").is(":visible")){
+        $("div.edit_avatar").hide();
+      }else{
+        $("div.edit_avatar").show();
+      }
+    });
+  </script>
+{% endblock %}
+
+<!-- block edit_name -->
+{% block profile_edit_name %}
+  <!-- First_name & last_name -->
+  <!-- Text + Link-edit -->
+  <p><b>name:</b> {{user.first_name}} {{user.last_name}} <a class="edit_name"><span class="glyphicon glyphicon-pencil"></span></a></p>
+  <!-- Form -->
+  <div class="row edit_name">
+    <div class="col-sm-8 col-md-8 col-lg-8">
+      <form action="" method="POST" class="form" role="form_user">
         {{ form_user.hidden_tag() }}
         {{ render_field(form_user.first_name, tabindex=240, value=user.first_name ) }}
         {{ render_field(form_user.last_name, tabindex=240, value=user.last_name) }}
         {{ render_submit_field(form_user.submit) }}
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
+  </div>
 
-  {% else %}
-    <!-- Text + Link-edit -->
-    <p><b>name:</b> {{user.first_name}} {{user.last_name}} <a href="?name=True"><span class="glyphicon glyphicon-pencil"></span></a></p>
-  {% endif %}
+  <!-- Show & Hide - Form -->
+  <script type="text/javascript">
+    $("div.edit_name").hide();
+    $("a.edit_name").click(function() {
+      if($("div.edit_name").is(":visible")){
+        $("div.edit_name").hide();
+      }else{
+        $("div.edit_name").show();
+      }
+    });
+  </script>
 
   <!-- Link edit username & password -->
   <div id="links_Username_Pass">

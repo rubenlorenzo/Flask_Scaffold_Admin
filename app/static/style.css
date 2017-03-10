@@ -22,7 +22,7 @@ a :hover, a :focus, a :active, a .active {
   border-color: #01A158;
 }
 
-input[type="text"]{
+input[type="text"], input[type="file"] {
   border-radius: 0px;
 }
 
@@ -79,9 +79,24 @@ a.list-group-item:focus, a.list-group-item:hover, .list-group-item.active:focus,
 }
 
 #avatar{
-  font-size: 88px;
-  margin-top: 0.4em;
-  margin-left: 0.1em;
+  margin-top: 0.6em;
+  margin-left: 0.6em;
+  border: 2px solid  #c6c6c6;
+  padding: 2px;
+
+  background-color: #ddd;
+  width: 100px;
+  height: 100px;
+}
+
+a.edit_avatar{
+  position: relative;
+  top:-18px;
+  margin-left: 112px;
+}
+div.edit_avatar{
+  margin-top: 0px;
+  margin-left: -7px;
 }
 
 /* Edit profile */
