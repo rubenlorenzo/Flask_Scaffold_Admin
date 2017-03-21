@@ -1,0 +1,23 @@
+# file config
+app/config.py
+
+# virtual entorn
+venv
+
+# files compiling
+*.pyc
+
+# files database
+*.sqlite
+
+# logo-web
+app/static/icon_page.png
+
+# bootstrap_wtf
+app/templates/macros/bootstrap_wtf.html
+
+# upload photos
+app/upload_photos/
+
+# avatar default
+app/static/default_avatar.png
