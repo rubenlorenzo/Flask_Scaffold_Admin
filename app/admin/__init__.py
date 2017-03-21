@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_user import UserManager, SQLAlchemyAdapter
 from flask import Blueprint
 
+
 # Initialize Flask-SQLAlchemy
 db = SQLAlchemy(app)
 
@@ -11,10 +12,9 @@ db = SQLAlchemy(app)
 from .models import User, Role
 db.create_all()
 
-#Add User to Flask-User
+# Add User to Flask-User
 db_adapter = SQLAlchemyAdapter(db, User)
 user_manager = UserManager(db_adapter, app)
-
 
 # Create user admin default
 if not User.query.filter(User.username==os.getenv('ADMIN_USER')).first():

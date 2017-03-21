@@ -1,16 +1,20 @@
 from flask import Flask
 import os
 from flask_mail import Mail
+from flask_uploads import UploadSet, IMAGES, configure_uploads
 
 app = Flask(__name__)
 
-#Setup config
+# Setup config
 from app.settings import ConfigClass
 app.config.from_object(__name__+'.ConfigClass')
 
 from app.settings import CreateAdminUser
 app.config.from_object(__name__+'.CreateAdminUser')
 
+# Upload photos config
+uploaded_photos = UploadSet('photos', IMAGES)
+configure_uploads(app, uploaded_photos)
 
 # Initialize Flask-Mail
 mail = Mail(app)

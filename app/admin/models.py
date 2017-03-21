@@ -2,7 +2,6 @@ from flask_user import UserMixin
 from . import db
 
 
-
 # User -  Model
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -14,18 +13,19 @@ class User(db.Model, UserMixin):
     active = db.Column('is_active', db.Boolean(), nullable=False, server_default='0')
     first_name = db.Column(db.String(100), nullable=False, server_default=u' ')
     last_name = db.Column(db.String(100), nullable=False, server_default=u' ')
+    avatar_photo = db.Column(db.String(100), nullable=False, server_default=u' ')
 
     # role - relation
     roles = db.relationship('Role', secondary='users_roles',
         backref=db.backref('users', lazy='dynamic'))
 
-#Role - Model
+# Role - Model
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(50), unique=True)
 
-#UserRoles - Table
+# UserRoles - Table
 class UserRoles(db.Model):
     __tablename__ = 'users_roles'
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), primary_key=True)

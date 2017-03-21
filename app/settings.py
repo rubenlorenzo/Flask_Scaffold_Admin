@@ -18,12 +18,12 @@ class ConfigClass(object):
     MAIL_USE_SSL =        int(os.getenv('MAIL_USE_SSL',         True))
 
     # Flask-User settings
-    USER_APP_NAME        = "UsersApp"                # Used by email templates
+    USER_APP_NAME        = "CITY_DASHBOARD"                # Used by email templates
 
-    #Upload folders
-    AVATAR_FOLDER = os.getenv('AVATAR_FOLDER',            'app/admin/avatar_photo')    
+    # Upload folders
+    UPLOADED_PHOTOS_DEST = "app/upload_photos"
 
-#Admin user creation settings
+# Admin user creation settings
 class CreateAdminUser(object):
     ADMIN_USER = os.getenv('ADMIN_USER',        'admin')
     ADMIN_EMAIL = os.getenv('ADMIN_EMAIL',        'email@example.com')

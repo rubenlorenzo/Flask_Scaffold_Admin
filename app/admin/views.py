@@ -1,9 +1,11 @@
 import os
-from app import app
 from flask import render_template
 from flask import request, url_for, redirect, flash, send_from_directory, send_file
 from flask_user import login_required, confirm_email_required, roles_required, current_user
 from . import admin, db
+from app import uploaded_photos
+import imghdr
+from flask_uploads import UploadNotAllowed
 from .models import User, Role, UserRoles
 from sqlalchemy.orm import aliased
 from sqlalchemy.exc import IntegrityError
@@ -12,40 +14,69 @@ from array import array
 from sqlalchemy.sql import exists
 from werkzeug.utils import secure_filename
 
-
-
-
-
-
+# Current user is admin
 def current_user_is_admin() :
     value = False
     for r in current_user.roles:
         if r.name == "admin":
             value= True
+
     return value
 
+# Save avatar - fuction
 def save_avatar():
     f = request.files['photo']
-    filename = secure_filename(f.filename)
-    f.save(os.path.join(os.getenv('AVATAR_FOLDER') , str(current_user.id)+"_avatar"))
+    # Check intigrity image
+    check_photo=imghdr.what(f)
 
+    if check_photo is not None :
+        fname = secure_filename(f.filename)
+        fname=os.path.splitext(fname)
+        #Rename file: avatar_id.ext
+        f.filename = "avatar_"+str(current_user.id)+fname[1]
+
+        try:
+            # Save image in upload_photos
+            filename_upload=uploaded_photos.save(f)
+
+            # Remove image, if filename is diferent and filename save Database
+            if filename_upload !=  current_user.avatar_photo and current_user.avatar_photo !=" ":
+                remove_avatar(current_user)
+
+            current_user.avatar_photo = filename_upload
+            db.session.commit()
+
+        # Image is not integrated
+        except UploadNotAllowed:
+            flash("The upload not image")
+
+    # Image is not integrated
+    else:
+        flash("The upload not image")
+
+# Remove avatar - function
 def remove_avatar(user):
-    folder=""+os.getenv('AVATAR_FOLDER');
-    filename=str(user.id)+"_avatar"
-    os.remove(folder+"/"+filename)
+    # Selection image avatar
+    folder=os.getenv('UPLOADED_PHOTOS_DEST')
+    filename=user.avatar_photo
+    photo_path = folder+"/"+filename
+
+    # Remove file if it matches some parameters
+    if photo_path != folder and photo_path != folder+"/" and photo_path != folder+"/ "  :
+        os.remove(photo_path)
 
 
-#Root - route
+# Root - route
 @admin.route('/')
 def home_page():
     return redirect(url_for('admin.members_page'))
 
-#About - route
+# About - route
 @admin.route('/about')
 def about_page():
     return render_template('about_admin_page.html', blueprint_title="Admin", title="About")
 
-#Members - route
+# Members - route
 @admin.route('/members')
 @login_required
 def members_page():
@@ -53,7 +84,7 @@ def members_page():
         blueprint_title="Admin", title="Members", current_user_is_admin=current_user_is_admin())
 
 
-#Users_profile - route
+# Users_profile - route
 @admin.route('/members/profile/<username>')
 @login_required
 def profile_page(username):
@@ -63,7 +94,7 @@ def profile_page(username):
         current_user_is_admin=current_user_is_admin() )
 
 
-#CurrentUser_profile_edit - route
+# CurrentUser_profile_edit - route
 @admin.route('/members/myprofile/edit', methods=['GET', 'POST'])
 @login_required
 def edit_myprofile():
@@ -95,7 +126,7 @@ def edit_myprofile():
         form_user=form_user, form_avatar_upload=form_avatar_upload,
          blueprint_title="Admin", title="Members", subtitle="Edit profile")
 
-#CurrentUser_admin_role_profile_edit - route
+# CurrentUser_admin_role_profile_edit - route
 @admin.route('/members/myprofile/edit/admin', methods=['GET', 'POST'])
 @roles_required('admin')
 def edit_myprofile_roles():
@@ -130,7 +161,7 @@ def edit_myprofile_roles():
         subtitle="Profile edit")
 
 
-#Edit_profile_roles - route
+# Edit_profile_roles - route
 @admin.route('/members/profile/roles/edit/<username>' ,methods=['GET','POST'])
 @roles_required('admin')
 def  edit_profile_roles(username):
@@ -261,8 +292,14 @@ def remove_user():
 @admin.route('/members/loaded/avatar/<username>')
 @login_required
 def loaded_avatar(username):
+    #Selection image avatar database
     user=db.session.query(User).filter(User.username==username).first()
-    folder=""+os.getenv('AVATAR_FOLDER');
-    filename=str(user.id)+"_avatar"
-    image_path="../"+folder+"/"+filename
-    return send_file(image_path, mimetype='image/png')
+    filename = user.avatar_photo
+
+    folder=os.getenv('UPLOADED_PHOTOS_DEST');
+
+    #Load_path
+    photo_path="../"+folder+"/"+filename
+
+    #Look image
+    return send_file(photo_path, mimetype='image/png')

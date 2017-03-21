@@ -30,14 +30,14 @@
             <!-- Navbar - right -->
             <ul class="nav navbar-nav navbar-left">
               <li><a {% if blueprint_title == "Home" %} class="active" {% endif %} href="{{url_for('home.home_page')}}">Home</a></li>
-              <li><a {% if blueprint_title == "Admin" %} class="active" {% endif %} href="{{url_for('admin.home_page')}}">Admin</a></li>              
+              <li><a {% if blueprint_title == "Admin" %} class="active" {% endif %} href="{{url_for('admin.home_page')}}">Admin</a></li>
             </ul>
 
             <!-- Navbar - right -->
             <ul class="nav navbar-nav navbar-right">
               {% if call_or_get(current_user.is_authenticated) %}
                   <!-- User - login -->
-                  <li><a href="/members/myprofile/edit"><span class="glyphicon glyphicon-user" aria-hidden="true"> </span> {{ current_user.username }}</a></li>
+                  <li><a href="{{ url_for('admin.profile_page', username=current_user.username) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"> </span> {{ current_user.username }}</a></li>
                   <li><a href="{{ url_for('user.logout') }}"><span class="glyphicon glyphicon-share" aria-hidden="true"> </span> Sign out</a></li>
               {% else %}
                   <li><a href="{{ url_for('user.login') }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"> </span> Sign in</a></li>
