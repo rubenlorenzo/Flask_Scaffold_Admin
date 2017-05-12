@@ -1,8 +1,8 @@
 {% extends "base_admin.html" %}
-  {% block content %}
+  {% block content_admin %}
 
     <!-- Title -->
-    <h2>Members page</h2>
+    <h2 class="section-heading">Members page</h2>
     <p> This page can only be accessed by authenticated users.</p>
     {% if current_user_is_admin %}
       <p>
@@ -15,7 +15,7 @@
       <div class="col-sm-12 col-md-10 col-lg-8">
         {% if current_user_is_admin %}
           <div>
-            <a href="/user/register" class="btn" role="button">Add user</a>
+            <a href="{{ url_for('admin.members_invite') }}" class="btn" role="button">Invite user</a>
           </div>
         {% endif %}
         <div class="list-group" id="list_items">
