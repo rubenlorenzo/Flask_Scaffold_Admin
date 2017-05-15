@@ -3,7 +3,12 @@
 
 
 {% block vertical_menu %}
-  <li role="presentation" {% if title == "City" %} class="active" {% endif %}><a href="{{ url_for('home.city_page') }}">City</a></li>
-  <li role="presentation" {% if title == "About" %} class="active" {% endif %}><a href="{{ url_for('home.about_page') }}">About</a></li>
-
+<div id="vertical-menu" class="col-sm-2 col-md-2 col-lg-2">
+  <ul class="nav nav-pills nav-stacked">
+    <li role="presentation" {% if title == "City" %} class="active" {% endif %}><a href="{{ url_for('home.city_page') }}">City</a></li>
+    <li role="presentation" {% if title == "About" %} class="active" {% endif %}><a href="{{ url_for('home.about_page') }}">About</a></li>
+  </ul>
+</div>
 {% endblock %}
+
+{% block content %}<div class="col-sm-8 col-md-9 col-lg-9">{% block content_home %}{% endblock %}</div>{% endblock %}

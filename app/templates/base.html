@@ -54,22 +54,20 @@
 
       <div class="row">
         <!-- vertical menu -->
-        <div id="vertical-menu" class="col-sm-2 col-md-2 col-lg-2">
-          <ul class="nav nav-pills nav-stacked">
+
             {% block vertical_menu %}
 
             {% endblock %}
-          </ul>
-        </div>
+
         <!-- Content -->
-        <div class="col-sm-8 col-md-9 col-lg-9">
+
           {% block main %}{% block content %}{% endblock %}{% endblock %}
-        </div>
+        
       </div>
 
 
 
-      </div>
+    </div>
 
     {% endblock %}
   </div>
