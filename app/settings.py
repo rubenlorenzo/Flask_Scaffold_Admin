@@ -22,7 +22,7 @@ class ConfigClass(object):
     USER_APP_NAME        = "APP_FLASK_ADMIN"                # Used by email templates
     USER_ENABLE_INVITATION = True
     USER_REQUIRE_INVITATION          = True
-    USER_INVITE_URL= "/"
+    USER_INVITE_URL= "/admin/members/invite"
 
     # Flask-User Endpoits
     USER_AFTER_CHANGE_PASSWORD_ENDPOINT      = 'admin.edit_myprofile'              # v0.5.3 and up
