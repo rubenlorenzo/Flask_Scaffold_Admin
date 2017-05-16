@@ -17,6 +17,7 @@ packaging==16.8
 passlib==1.7.1
 pycparser==2.17
 pycryptodome==3.4.5
+pyparsing==2.2.0
 six==1.10.0
 SQLAlchemy==1.1.9
 Werkzeug==0.11.15
