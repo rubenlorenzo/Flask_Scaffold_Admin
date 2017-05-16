@@ -1,0 +1,19 @@
+#btn_invite{
+  margin-bottom: 3px;
+}
+
+#avatar{
+  margin-top: 0.6em;
+  margin-left: 0.6em;
+  border: 2px solid  #c6c6c6;
+  padding: 2px;
+
+  background-color: #ddd;
+  width: 100px;
+  height: 100px;
+}
+
+#btn_delete_user{
+  background-color: #ad8080;
+  border-color: #C6C6C6;
+}

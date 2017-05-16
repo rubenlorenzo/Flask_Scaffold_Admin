@@ -1,0 +1,6 @@
+.navbar-default .navbar-left li a.active{
+  color:  #337AB7;
+}
+.navbar-default .navbar-left li a:hover{
+  color:  #FFFFF;
+}
