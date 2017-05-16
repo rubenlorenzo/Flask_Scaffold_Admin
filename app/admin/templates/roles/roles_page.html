@@ -18,7 +18,7 @@
       <!-- List roles -->
       {% for role in roles %}
       <div class="list-group">
-        <button type="button" class="list-group-item" value="{{role.name}}"  data-toggle="modal">
+        <button type="button" class="list-group-item" value="{{role.name}}"  data-toggle="modal-base">
           <div class="row">
             <div  class="col-sm-9"><span class="role-remove">{{role.name}}</span></div>
             <div class="col-sm-3"><p><span class="glyphicon glyphicon-trash"></span></p></div>
@@ -41,8 +41,8 @@
       //role selection
       if(roleRemove !== ""){
         //Change message modal and sow
-        $("#modal_action #message-modal").html("Do you accept your remove the <b>"+roleRemove+"</b> role?");
-        $("#modal_action").modal('show');
+        $("#modal-base #message-modal").html("Do you accept your remove the <b>"+roleRemove+"</b> role?");
+        $("#modal-base").modal('show');
 
         //Click accept modal, it remove role
         $("#modal-accept").click(function(){
