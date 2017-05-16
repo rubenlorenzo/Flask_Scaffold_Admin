@@ -5,12 +5,12 @@ from . import home
 #Root - route
 @home.route('/')
 def home_page():
-    return redirect(url_for('home.city_page'))
+    return redirect(url_for('home.content_page'))
 
 #Explore - route
-@home.route('/city')
-def city_page():
-    return render_template('city_page.html', blueprint_title="Home", title="City")
+@home.route('/content')
+def content_page():
+    return render_template('content_page.html', blueprint_title="Home", title="Content")
 
 #About - route
 @home.route('/about')

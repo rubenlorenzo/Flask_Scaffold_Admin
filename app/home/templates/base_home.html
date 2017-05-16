@@ -5,7 +5,7 @@
 {% block vertical_menu %}
 <div id="vertical-menu" class="col-sm-2 col-md-2 col-lg-2">
   <ul class="nav nav-pills nav-stacked">
-    <li role="presentation" {% if title == "City" %} class="active" {% endif %}><a href="{{ url_for('home.city_page') }}">City</a></li>
+    <li role="presentation" {% if title == "Content" %} class="active" {% endif %}><a href="{{ url_for('home.content_page') }}">Content</a></li>
     <li role="presentation" {% if title == "About" %} class="active" {% endif %}><a href="{{ url_for('home.about_page') }}">About</a></li>
   </ul>
 </div>
