@@ -17,7 +17,8 @@
       <ul class="nav nav-pills nav-stacked">
           <li role="presentation" {% if title == "Members" %} class="active" {% endif %}><a href="{{ url_for('admin.members_page') }}">Members</a></li>
           {% if vars.current_user_is_admin %}
-          <li role="presentation" {% if title == "Roles" %} class="active" {% endif %}><a href="{{ url_for('admin.roles_page') }}">Roles</a></li>
+            <li role="presentation" {% if title == "Roles" %} class="active" {% endif %}><a href="{{ url_for('admin.roles_page') }}">Roles</a></li>
+            {% include 'menu_addons_admin.html' %}          
           {% endif %}
           <li role="presentation" {% if title == "About" %} class="active" {% endif %}><a href="{{ url_for('admin.about_page') }}">About</a></li>
       </ul>

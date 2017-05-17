@@ -42,4 +42,6 @@ admin = Blueprint('admin', __name__, template_folder='./templates', static_folde
 
 # Views
 from . import views
- 
+
+# Views data_visualize
+from ..data_visualize import views
