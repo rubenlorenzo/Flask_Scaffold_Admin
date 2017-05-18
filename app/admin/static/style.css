@@ -1,18 +1,39 @@
 #btn_invite{
   margin-bottom: 3px;
 }
-
+/*
 #avatar{
   margin-top: 0.6em;
   margin-left: 0.6em;
   border: 2px solid  #c6c6c6;
-  padding: 2px;
-
+  padding-top: 2px;
   background-color: #ddd;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+}*/
+
+#avatar_photo {
+  margin-top: 0.9em;
+  margin-left: 0.4em;
   width: 100px;
   height: 100px;
 }
 
+#avatar_icon {
+  margin-top: 0.2em;
+  margin-left: 0.1em;
+  width: 100px;
+  height: 100px;
+  padding-top: 11px;
+}
+
+.avatar{
+  border: 2px solid #c6c6c6;
+  background-color: #ddd;
+
+  text-align: center;
+}
 #btn_delete_user{
   background-color: #ad8080;
   border-color: #C6C6C6;

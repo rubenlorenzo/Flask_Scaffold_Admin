@@ -12,7 +12,7 @@
         <div class="thumbnail">
 
           <! -- Avatar -->
-          <img id="avatar" src="{{url_for('admin.loaded_avatar', username=user.username)}}" alt="avatar_photo">
+          <img id="avatar_photo" class= avatar src="{{url_for('admin.loaded_avatar', username=user.username)}}" alt="avatar_photo">
 
           <!-- Avatar not found -->
           <script type="text/javascript">
@@ -32,10 +32,11 @@
           function handleImageError() {
             var imgPath;
 
-            $('#avatar').each(function() {
+            $('#avatar_photo').each(function() {
               imgPath = $(this).attr('src');
               if (!imgExists(imgPath)) {
-                $(this).attr('src', '/admin/static/default_avatar.png');
+                /*$(this).attr('src', '/admin/static/default_avatar.png');*/
+                $(this).replaceWith( "<i id='avatar_icon' class='avatar fa fa-user-circle fa-5x' aria-hidden='true'></i>" );
               }
             });
 
