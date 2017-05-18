@@ -1,12 +1,12 @@
 from flask import render_template
 from flask_user import login_required, confirm_email_required, roles_required, current_user
 from ..admin import admin
-from . import data_visualize
+from . import data_visualize_admin
 
 # Root - route
-@admin.route('/data_visualize')
+@data_visualize_admin.route('/')
 @login_required
 @confirm_email_required
 @roles_required('admin')
-def data_visualize_admin():
-    return render_template('data_visualize_admin.html', blueprint_title="Admin", title="Data Visualize")
+def channels_page():
+    return render_template('admin/channels_visualize_page.html', blueprint_title="Admin", title="Data Visualize")
