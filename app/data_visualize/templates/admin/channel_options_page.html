@@ -1,0 +1,12 @@
+{% extends "base_admin.html" %}
+{% block content_admin %}
+  <h1> Data Visualize -  {{channel}}</h1>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#">Settings</a></li>
+    <li><a href="#">Task</a></li>
+    <li><a href="#">Visualizes</a></li>
+  </ul>
+  {% block content_channels_options %}
+  <h2>In process ...</h2>
+  {% endblock %}
+{% endblock %}
