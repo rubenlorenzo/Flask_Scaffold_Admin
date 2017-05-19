@@ -29,14 +29,13 @@
             {% endif %}
 
             <!-- Username -->
-            <h4><span class="glyphicon glyphicon-user"> {{u.username}}</span></h4>
+            <h4><span class="glyphicon glyphicon-user"></span> {{u.username}}</h4>
 
-              <!-- Roles -->
-            <span class="glyphicon glyphicon-eye-open">
+            <!-- Roles -->
             {% for r in u.roles %}
-              {{r.name }}
+              <span class="glyphicon glyphicon-eye-open"></span> {{r.name }}
             {% endfor %}
-            </span>
+            
 
             </a>
             {% endfor %}
