@@ -1,5 +1,6 @@
 FROM python:2.7-slim
 
+## Alternative sudo for Dockerfile
 ENV GOSU_VERSION 1.10
 RUN set -x \
 	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates wget && rm -rf /var/lib/apt/lists/* \
@@ -12,12 +13,13 @@ RUN set -x \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true \
-	&& apt-get purge -y --auto-remove ca-certificates wget
+	&& apt-get purge -y --auto-remove ca-certificates wget \
+	\
+	## Packages for requirements
+	&& apt-get update && apt-get install -y python-dev gcc
 
-
-RUN groupadd -r users_python && useradd -ms /bin/bash -g users_python user_python
-
-RUN chgrp users_python /usr/local/bin/gosu \
+RUN groupadd -r users_python && useradd -ms /bin/bash -g users_python user_python \
+&& chgrp users_python /usr/local/bin/gosu \
 && chmod ug+s /usr/local/bin/gosu
 
 USER user_python
