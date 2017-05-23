@@ -9,11 +9,11 @@ from . import data_task
 @confirm_email_required
 @roles_required('admin')
 def sources_page():
-    return render_template('admin/sources_page.html', blueprint_title="Admin", title="Data Task")
+    return render_template('sources_page.html', blueprint_title="Admin", title="Data Task")
 
 @data_task.route('/<source>')
 @login_required
 @confirm_email_required
 @roles_required('admin')
 def source_options_page(source):
-    return render_template('admin/source_options_page.html', blueprint_title="Admin", title="Data Task", subtitle=source , source=source)
+    return render_template('source_options_page.html', blueprint_title="Admin", title="Data Task", subtitle=source , source=source)
