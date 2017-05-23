@@ -8,12 +8,12 @@ from . import data_task
 @login_required
 @confirm_email_required
 @roles_required('admin')
-def channels_page():
-    return render_template('admin/channels_visualize_page.html', blueprint_title="Admin", title="Data Task")
+def sources_page():
+    return render_template('admin/sources_page.html', blueprint_title="Admin", title="Data Task")
 
-@data_task.route('/<channel>')
+@data_task.route('/<source>')
 @login_required
 @confirm_email_required
 @roles_required('admin')
-def channel_options_page(channel):
-    return render_template('admin/channel_options_page.html', blueprint_title="Admin", title="Data Task", subtitle=channel , channel=channel)
+def source_options_page(source):
+    return render_template('admin/source_options_page.html', blueprint_title="Admin", title="Data Task", subtitle=source , source=source)
