@@ -26,8 +26,8 @@ app.register_blueprint(admin_blueprint, url_prefix='/admin')
 from .home import home as home_blueprint
 app.register_blueprint(home_blueprint, url_prefix='/home')
 
-from .data_visualize import data_visualize_admin as data_visualize_blueprint
-app.register_blueprint(data_visualize_blueprint, url_prefix="/admin/data_visualize")
+from .data_task import data_task as data_task_blueprint
+app.register_blueprint(data_task_blueprint, url_prefix="/admin/data_task")
 
 #Views
 from . import views
