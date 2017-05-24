@@ -20,18 +20,19 @@ configure_uploads(app, uploaded_photos)
 mail = Mail(app)
 
 # Load Blueprints
-from .admin import admin as admin_blueprint
-app.register_blueprint(admin_blueprint, url_prefix='/admin')
-
+## home
 from .home import home as home_blueprint
 app.register_blueprint(home_blueprint, url_prefix='/home')
 
-from .data_task import data_task as data_task_blueprint
-app.register_blueprint(data_task_blueprint, url_prefix="/admin/data_task")
+## admin
+from .admin import admin as admin_blueprint, register_sub_blueprint_admin
+app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
-#Views
+register_sub_blueprint_admin(app)
+
+# Views
 from . import views
 
 # Start server
 if __name__=='__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
