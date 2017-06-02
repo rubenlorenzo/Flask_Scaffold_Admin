@@ -11,3 +11,9 @@ class CredentialsTwitter(Credentials, db.Model):
     def __init__(self):
         self.provider="twitter"
         Credentials.__init__(self, self.provider)
+
+    def add_credentials(self, token, token_secret,consumer_key,consumer_secret):
+        self.token=token
+        self.token_secret=token_secret
+        self.consumer_key=consumer_key
+        self.consumer_secret=consumer_secret

@@ -10,4 +10,4 @@ from .models import CredentialsTwitter
 @roles_required('admin')
 def source_options_page():
     credentialsTwitter=CredentialsTwitter()
-    return render_template('twitter_options_page.html', blueprint_title="Admin", title="Data Task", subtitle="twitter" , source="twitter", description=str(credentialsTwitter))
+    return render_template('source_options_page.html', blueprint_title="Admin", title="Data Task", subtitle="twitter" , source="twitter", description=str(credentialsTwitter))
