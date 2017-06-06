@@ -33,6 +33,41 @@ register_sub_blueprint_admin(app)
 # Views
 from . import views
 
+## Celery
+from celery import Celery
+import time
+def make_celery(app):
+    celery = Celery(app.import_name,  backend=app.config['CELERY_RESULT_BACKEND'],
+        broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        abstract = True
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    return celery
+
+app.config.update(
+    CELERY_BROKER_URL='redis://redis:6379',
+    CELERY_RESULT_BACKEND='redis://redis:6379'
+)
+celery = make_celery(app)
+
+@celery.task(bind=True)
+def task_normal(self):
+    for i in range(1,10):
+        print i
+        time.sleep(2)
+
+@app.route('/task')
+def task_n():
+    task = task_normal.apply_async()
+    return "task_normal"
+
+#####
+
 # Start server
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
