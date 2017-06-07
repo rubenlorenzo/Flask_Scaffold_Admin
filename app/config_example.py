@@ -3,6 +3,7 @@ import os
 #Flask settings
 os.environ['SECRET_KEY'] = '22222'
 os.environ['UPLOADED_PHOTOS_DEST'] = "app/upload_photos"
+
 #Flask-Mail settings
 os.environ['MAIL_USERNAME'] = 'email@example.com'
 os.environ['MAIL_PASSWORD'] = 'password'
