@@ -31,4 +31,4 @@ def source_options_page(source):
         db.session.add(credentials)
         db.session.commit()
 
-    return render_template(template_options(source), blueprint_title="Admin", title="Data Task", subtitle=source , source=source, credentials=credentials, form_credentials=form_credentials)
+    return render_template(source+'_options_page.html', blueprint_title="Admin", title="Data Task", subtitle=source , source=source, credentials=credentials, form_credentials=form_credentials)

@@ -3,6 +3,7 @@ from .base_models import Credentials
 from .twitter.models import CredentialsTwitter
 from .twitter.forms import CredentialsTwitterForm
 
+
 def credentials_generate(source):
     credentials = Credentials("none")
 
@@ -10,6 +11,7 @@ def credentials_generate(source):
         credentials = CredentialsTwitter()
 
     return credentials
+
 
 def get_credentials(source, user_id):
     credentials = credentials_generate(source)
@@ -21,6 +23,7 @@ def get_credentials(source, user_id):
         credentials = credentials_generate(source)
     return credentials
 
+
 def credentials_form_generate(source):
     credentials_form = "none"
 
@@ -28,11 +31,3 @@ def credentials_form_generate(source):
         credentials_form = CredentialsTwitterForm()
 
     return credentials_form
-
-def template_options(source):
-    template = "source_options_page.html"
-
-    if source == "twitter":
-        template = 'twitter_options_page.html'
-
-    return template
