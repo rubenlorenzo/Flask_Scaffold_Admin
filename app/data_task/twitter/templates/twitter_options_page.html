@@ -4,10 +4,11 @@
 {% from "macros/form_macros.html" import render_field, render_submit_field%}
 
 {% block content_source_options %}
-  <h3>Credentials</h3>
 
-  <!-- Form -->
-  <div class="row credentials_twitter">
+    <h3>Credentials</h3>
+
+    <!-- Form -->
+    <div class="row credentials_twitter">
     <div class="col-sm-6 col-md-7 col-lg-8">
       <form  action="" method="POST" enctype="multipart/form-data">
         {{ form_credentials.hidden_tag() }}
@@ -18,5 +19,6 @@
         {{ render_submit_field(form_credentials.submit) }}
       </form>
     </div>
-  </div>
+    </div>
+
 {% endblock %}
