@@ -11,5 +11,10 @@ def register_sub_blueprint_data_task(app, url_prefix_parent="/admin/data_task"):
 
 register_sub_blueprint_data_task(app)
 
+# Celery
+from ..celery_libs import make_celery
+celery = make_celery(app)
+
+
 # Views
 from . import views

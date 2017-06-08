@@ -4,6 +4,8 @@ from ..admin import admin
 from . import data_task
 from .libs import credentials_generate, credentials_form_generate, get_credentials
 from ..admin import db
+from .tasks import task_test
+ 
 
 # Root - route
 @data_task.route('/')
@@ -32,3 +34,11 @@ def source_options_page(source):
         db.session.commit()
 
     return render_template(source+'_options_page.html', blueprint_title="Admin", title="Data Task", subtitle=source , source=source, credentials=credentials, form_credentials=form_credentials)
+
+@data_task.route('/task_test')
+@login_required
+@confirm_email_required
+@roles_required('admin')
+def task_t():
+    task = task_test.apply_async()
+    return "task_test"

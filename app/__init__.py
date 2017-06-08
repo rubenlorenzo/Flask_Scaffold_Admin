@@ -33,6 +33,10 @@ register_sub_blueprint_admin(app)
 # Views
 from . import views
 
+## Celery
+from .celery_libs import make_celery
+celery=make_celery(app)
+
 # Start server
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)

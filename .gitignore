@@ -16,6 +16,8 @@ app/upload_photos/
 # avatar default
 app/static/default_avatar.png
 
+# requirements old
+requirements-old.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
