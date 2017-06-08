@@ -2,7 +2,7 @@ from flask import render_template, redirect, request
 from flask_user import login_required, confirm_email_required, roles_required, current_user
 from ..admin import admin
 from . import data_task
-from .libs import credentials_generate, credentials_form_generate, template_options, get_credentials
+from .libs import credentials_generate, credentials_form_generate, get_credentials
 from ..admin import db
 
 # Root - route
