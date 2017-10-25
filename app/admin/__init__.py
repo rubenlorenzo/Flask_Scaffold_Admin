@@ -40,13 +40,17 @@ if not User.query.filter(User.username==os.getenv('ADMIN_USER')).first():
 # Blueprint
 admin = Blueprint('admin', __name__, template_folder='./templates', static_folder="./static", static_url_path="/static")
 
-from ..data_task import data_task as data_task_blueprint
+""" 
+## Add addons
+from ..addon_1 import addon_1 as addon_1_blueprint
 
 def register_sub_blueprint_admin(app, url_prefix_parent="/admin"):
     app.register_blueprint(data_task_blueprint, url_prefix=url_prefix_parent+"/data_task")
-
+"""
 # Views
 from . import views
 
-# Views data_task
-from ..data_task import views
+"""
+# Views addon_1
+from ..addon_1 import views
+"""

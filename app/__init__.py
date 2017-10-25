@@ -25,17 +25,13 @@ from .home import home as home_blueprint
 app.register_blueprint(home_blueprint, url_prefix='/home')
 
 ## admin
-from .admin import admin as admin_blueprint, register_sub_blueprint_admin
+from .admin import admin as admin_blueprint #, register_sub_blueprint_admin
 app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
-register_sub_blueprint_admin(app)
+#register_sub_blueprint_admin(app)
 
 # Views
 from . import views
-
-## Celery
-from .celery_libs import make_celery
-celery=make_celery(app)
 
 # Start server
 if __name__=='__main__':

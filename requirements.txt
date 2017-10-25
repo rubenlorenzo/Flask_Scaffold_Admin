@@ -3,7 +3,6 @@ appdirs==1.4.0
 bcrypt==3.1.2
 billiard==3.5.0.2
 blinker==1.4
-celery==4.0.2
 cffi==1.9.1
 click==6.7
 Flask==0.12.1
@@ -11,7 +10,7 @@ Flask-Login==0.4.0
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.2
 Flask-Uploads==0.2.1
-Flask-User==0.6.11
+Flask-User==0.6.12
 Flask-WTF==0.14.2
 gunicorn==19.7.1
 itsdangerous==0.24
