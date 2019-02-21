@@ -7,6 +7,12 @@ app/config.py
 # logo-web
 app/static/icon_page.png
 
+# video sample
+video.webm
+
+# develope
+.vscode
+
 # bootstrap_wtf
 app/templates/macros/bootstrap_wtf.html
 
